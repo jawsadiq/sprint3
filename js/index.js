@@ -121,6 +121,14 @@ function renderTasks() {
   for (var i = 0; i < stroringData.length; i++) {
     var id = i;
     var task = stroringData[i];
+
+    let markDoneBtn = "";
+
+
+    if(task.status!== "done"){
+      markDoneBtn = `<button class="done-button" id="markDone" >Mark as done</button>`;
+    }
+
     let newUserhtml = `
       <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4">
       <div class="card m-auto text-white bg-success mb-3" style="max-width: 18rem;">
@@ -133,8 +141,7 @@ function renderTasks() {
           <p class="card-text">Due Date: ${task.date}</p>
           <p class="card-text">Status: ${task.status}</p>
           <button class="delete-button btn btn-danger btn-sm" data-task-id="${id}">DELETE</button>
-          
-
+          ${markDoneBtn}
         </div>
       </div>
     </div>
@@ -142,10 +149,18 @@ function renderTasks() {
 
     taskParent.innerHTML += newUserhtml;
   }
+
+
   var deleteButtons = document.getElementsByClassName("delete-button");
   for (var i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener('click', deleteTask);
   }
+
+  let markDone1 = document.getElementById("markDone");
+
+  markDone1.addEventListener('click', changeToDone);
+
+
 }
 
 function deleteTask(event) {
@@ -156,9 +171,17 @@ function deleteTask(event) {
   
   renderTasks();
 }
+console.log()
+function changeToDone() {
+  alert('hi');
+
+  renderTasks();
+}
+
+
 
 // Initial rendering
-renderTasks();
+// renderTasks();
 
 
   
