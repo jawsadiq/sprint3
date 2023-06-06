@@ -2,6 +2,30 @@ var stroringData = [];
 
 var form = document.getElementById('userForm');
 let taskParent = document.querySelector("#taskParent");
+var storedData = localStorage.getItem('formData');
+
+
+
+console.log(storedData);
+
+  // If there is stored data, parse it back into an object
+  if (storedData) {
+    stroringData = JSON.parse(storedData);
+    renderTasks();
+  }
+    // // Populate the form fields with the retrieved data
+    // document.getElementById('name').value = stroringData.name;
+    // document.getElementById('description').value = stroringData.description;
+    // document.getElementById('assign').value = stroringData.assign;
+    // document.getElementById('date').value = stroringData.date;
+    // var statusRadios = document.getElementsByName('status');
+    // for (var i = 0; i < statusRadios.length; i++) {
+    //   if (statusRadios[i].value === stroringData.status) {
+    //     statusRadios[i].checked = true;
+    //   }
+    // }
+  
+
 
 form.addEventListener('submit', storingData)
 
@@ -81,6 +105,11 @@ function storingData(event) {
 
 
   stroringData.push(userInput);
+
+   // Store the JSON string in local storage
+   localStorage.setItem('formData', JSON.stringify(stroringData));
+
+
   form.reset();
   renderTasks();
 
@@ -122,8 +151,17 @@ function renderTasks() {
 function deleteTask(event) {
   var taskId = event.target.getAttribute("data-task-id");
   stroringData.splice(taskId, 1);
+
+  localStorage.setItem('formData', JSON.stringify(stroringData));
+  
   renderTasks();
 }
 
 // Initial rendering
 renderTasks();
+
+
+  
+
+
+
