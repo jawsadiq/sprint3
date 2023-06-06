@@ -15,23 +15,6 @@ function storingData(event) {
   var dueDate = document.getElementById('date').value;
   var status = document.getElementsByName('status');
 
-
-  // if(taskName.trim()===''){
-  //   alert("Name can not be empty")
-  //   return;
-  // }
-  //  if (taskDescription.trim() === '' ){
-  //   alert("Description can not be empty")
-  //   return;
-  //  }
-  //  if(assignTo.trim() === '' ){
-  //   alert("Assign box can not be empty")
-  //   return;
-  //  }
-  //  if(dueDate.trim() === ''){
-  //   alert("Select the date please")
-  //   return;
-  //  }
   if (taskName.length < 5){
     document.getElementById('taskError').innerHTML = "Please enter more than 5 characters"
     return;
@@ -72,10 +55,9 @@ function storingData(event) {
        break;
      }
    }
- console.log(taskstatus);
    if (!taskstatus) {
     event.preventDefault();
-   // alert('Please select a status.');
+
    document.getElementById('statusError').innerHTML = "Please choose a status</br>"
     return;
    }
