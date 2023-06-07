@@ -156,10 +156,10 @@ function renderTasks() {
     deleteButtons[i].addEventListener('click', deleteTask);
   }
 
-  var markDone1 = document.getElementsByClassName("done-button");
-  for (var i = 0; i < markDone1.length; i++) {
-    markDone1[i].addEventListener('click', updateStatus);
-  }
+  // var markDone1 = document.getElementsByClassName("done-button");
+  // for (var i = 0; i < markDone1.length; i++) {
+  //   markDone1[i].addEventListener('click', updateStatus);
+  // }
 
 
 }
