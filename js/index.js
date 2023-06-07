@@ -126,7 +126,7 @@ function renderTasks() {
 
 
     if(task.status!== "done"){
-      markDoneBtn = `<button class="done-button" id="markDone" >Mark as done</button>`;
+      markDoneBtn = `<button class="done-button" id="mardone1" onClick = "updateStatustoDone()";  data-task-id="${id}" >Mark as done</button>`;
     }
 
     let newUserhtml = `
@@ -156,9 +156,10 @@ function renderTasks() {
     deleteButtons[i].addEventListener('click', deleteTask);
   }
 
-  let markDone1 = document.getElementById("markDone");
-
-  markDone1.addEventListener('click', changeToDone);
+  var markDone1 = document.getElementsByClassName("done-button");
+  for (var i = 0; i < markDone1.length; i++) {
+    markDone1[i].addEventListener('click', updateStatus);
+  }
 
 
 }
@@ -171,13 +172,10 @@ function deleteTask(event) {
   
   renderTasks();
 }
-console.log()
-function changeToDone() {
-  alert('hi');
 
-  renderTasks();
+function updateStatustoDone(){
+  document.getElementById("mardone1").style.display = "none";
 }
-
 
 
 // Initial rendering
