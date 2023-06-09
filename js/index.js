@@ -13,19 +13,7 @@ console.log(storedData);
     stroringData = JSON.parse(storedData);
     renderTasks();
   }
-    // // Populate the form fields with the retrieved data
-    // document.getElementById('name').value = stroringData.name;
-    // document.getElementById('description').value = stroringData.description;
-    // document.getElementById('assign').value = stroringData.assign;
-    // document.getElementById('date').value = stroringData.date;
-    // var statusRadios = document.getElementsByName('status');
-    // for (var i = 0; i < statusRadios.length; i++) {
-    //   if (statusRadios[i].value === stroringData.status) {
-    //     statusRadios[i].checked = true;
-    //   }
-    // }
   
-
 
 form.addEventListener('submit', storingData)
 
@@ -93,6 +81,7 @@ function storingData(event) {
 
  
   var userInput = {
+    id: stroringData.length,
     name: taskName,
     description: taskDescription,
     assign: assignTo,
@@ -121,8 +110,17 @@ function renderTasks() {
   for (var i = 0; i < stroringData.length; i++) {
     var id = i;
     var task = stroringData[i];
+
+    let markDoneBtn = "";
+
+    if (task.status !== "done") {
+      markDoneBtn = `<button class="done-button" data-task-id="${id}" onclick="markAsDone(${id})">Mark as done</button>`;
+    } else {
+      markDoneBtn = `<button class="done-button" data-task-id="${id}" style="display: none;">Mark as done</button>`;
+    }
+
     let newUserhtml = `
-      <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div id="task-${id}" class="col col-xs-12 col-sm-12 col-md-4 col-lg-4">
       <div class="card m-auto text-white bg-success mb-3" style="max-width: 18rem;">
         <div class="card-header">Task ${id+1}</div>
         <div id = "storingData" class="card-body">
@@ -133,7 +131,7 @@ function renderTasks() {
           <p class="card-text">Due Date: ${task.date}</p>
           <p class="card-text">Status: ${task.status}</p>
           <button class="delete-button btn btn-danger btn-sm" data-task-id="${id}">DELETE</button>
-          
+          <button class="done-button btn btn-danger btn-sm" data-task-id="${task.id}" onclick="markAsDone(${task.id})">Mark as done</button>
 
         </div>
       </div>
@@ -146,6 +144,16 @@ function renderTasks() {
   for (var i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener('click', deleteTask);
   }
+
+  var markDoneButtons = document.getElementsByClassName("done-button");
+  for (var i = 0; i < markDoneButtons.length; i++) {
+    var taskId = markDoneButtons[i].getAttribute("data-task-id");
+    var task = stroringData.find(task => task.id == taskId);
+    if (task && task.status === "done") {
+      markDoneButtons[i].style.display = "none";
+    }
+  }
+
 }
 
 function deleteTask(event) {
@@ -156,6 +164,33 @@ function deleteTask(event) {
   
   renderTasks();
 }
+function markAsDone(taskId) {
+  // Find the task by taskId in the storingData array
+  var task = stroringData.find(task => task.id === taskId);
+console.log(task.status);
+
+  if (task) {
+    // Update the status in the array
+    task.status = "done";
+
+    // Update the status in the UI
+    const taskElement = document.getElementById(`task-${taskId}`);
+    console.log(taskElement);
+    if (taskElement) {
+    
+      taskElement.querySelector("p.card-text:nth-child(5)").innerHTML = `Status: ${task.status}`;
+    
+     const markDoneButton = taskElement.querySelector(".done-button");
+      if (markDoneButton) {
+        console.log(markDoneButton);
+        markDoneButton.style.display = "none";
+       
+      }
+    }
+    localStorage.setItem('formData', JSON.stringify(stroringData));
+  }
+}
+
 
 // Initial rendering
 renderTasks();
